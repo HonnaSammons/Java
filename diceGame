@@ -1,0 +1,132 @@
+/**
+ *
+ * @author Honna Sammons
+ */
+public class diceGame {
+       //esablichin the 
+        static int round = 1;
+        static int game ;
+        static int total;
+        static int lose = 0;
+        static int win = 0;
+        static int point = 0;
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
+        for(game = 1 ; game <= 100000; game++){
+        // call method to calculate what happens with dice total
+         rollDice();
+         // only prints the first 10 games
+            if (game < 11){
+                // this is here so that it will print out win or lose, but not at the verry first entry
+                 if(win >= lose && win != 0){
+                       System.out.println("WIN!");
+                   }else if ( win <=lose && lose !=0){
+                       System.out.println("LOSS!");
+                   }
+            System.out.println(win + " win(s), " + lose +" loss(es)" );
+            System.out.println("       ");
+            }
+        }
+        // only prints once and is the total losses and wins for the entire game
+        System.out.println("OVERALL:");
+        System.out.println(win + " win(s)" + " "+ lose + " loss(es)");
+    }
+      
+  /**
+   * 
+   * @return returns the value of the randomly generated number of the first dice
+   */
+  // method for the first die role  
+static int dice1(){
+    int lownum = 1;
+    int topnum = 6;
+    int die1 = (int)(Math.random() * (topnum - lownum +1) +lownum);
+    return die1;
+  
+}
+/**
+ * 
+ * @return returns the value of the second randomly  generated number of the second dice
+ */
+// method for the second die role
+static int dice2(){
+    int lownum = 1;
+    int topnum = 6;
+    int die2 = (int)(Math.random() * (topnum - lownum +1) +lownum);
+    return die2;
+ }
+
+// this is the logic that deals with all of the possible outcomes for the totals according to the rules of the game
+static void rollDice(){
+    
+    
+    
+    //this will iterate through the games
+        //for(game = 0 ; game <1; game++){
+            //calling both dice methods so that we can get our number
+            int die1 = dice1();
+            int die2 = dice2();
+            
+            // this is the two random numbers added
+            total = die1 + die2;
+           //this is the first round
+             if (game < 11){
+                System.out.println("Round " + game + " Roll " + round + " --  Die 1: " 
+                        + die1 + " , " + "die 2: " + die2 + " --  Total:" + total);
+
+             }
+                
+                // switch statement for the first round
+                 switch (total){
+                   case 2:
+                     lose++;
+                     break;
+                   case 3:  
+                     lose++;  
+                     break;
+                   case 12: 
+                     lose++;  
+                     break;
+                   case 7:
+                      win++;
+                      break;
+                   case 11:
+                       win++;
+                       break;
+                   
+                   default:
+                       // this to other re-rolls
+                     
+                      while (total !=7 && point != total ){
+                          
+                          point = total;
+                          round++;
+                          total = dice1() + dice2();
+                          die1 = dice1();
+                          die2 = dice2();
+                         if (game < 11){ 
+                          
+                          if (round <= 2){   
+                           System.out.println("Point is " + point);
+                          }
+                           // prints out the information after each reroll
+                           System.out.println("Round " + game + " Roll " + round + " --  Die 1: " 
+                        + die1 + " , " + "die 2: " + die2 + " --  Total:" + total);
+                             
+                         }
+                         }
+                      // both if statements are here to end the while lop
+                       if (total == 7){
+                           lose++;
+                           round = 1;
+                         }
+                       if (point == total){
+                         win++;
+                         round = 1;
+                         }                             
+        } 
+}
+
